@@ -42,15 +42,16 @@ def extract_indee_jobs(last_page) :
         result = requests.get(f"{URL}&start={page*LIMIT}")
         soup = BeautifulSoup(result.text,"html.parser")
 
-        ### 각 페이지에서 직업들 추출.
-        ### div 태그에서 클래스는 jobsearch-serpJobCart 인 텍스트 추출
+        ### 각 페이지의 각 태그 <div class='jobsearch-serpJobCart'> 에서 직업들 추출. 
+        ### div 태그에서 클래스는 jobsearch-serpJobCart 인 텍스트 추출  
         results = soup.find_all("div", class_="job_seen_beacon")
         
         for result in results :
             title = result.find("h2", {"class":"jobTitle"})
             # print(title);
-
-            ### span 속성이 title 인거 추출
+            
+            ### span 태그 속성 검색 하면 <sapn title='직업 제목'> 이고  class 는 없으므로
+            ### span 속성이 title 인거와 class과 없는거 추출 
             ### 하지만 title 에 title 속성 값이 없는게 잇어서 추출 안되므로 코드 변경
             span = title.find('span', {'class':None})["title"];
             print(span)
@@ -58,8 +59,6 @@ def extract_indee_jobs(last_page) :
             jobs.append(span)
         
     return jobs;
-        
-
 
 
 
