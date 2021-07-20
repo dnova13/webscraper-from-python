@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup 
+import re
 
 LIMIT = 50;
 URL='https://www.indeed.com/jobs?as_and=python&limit=50'
@@ -52,13 +53,32 @@ def extract_job(html) :
     
     company = company.strip(); ### 빈 공간을 없앰. 다른 예로 strip("F") F로 된 글자 다 없애줌.
 
-    return {'title' : title, 'company' : company}
+    ### 위치 추적
+    # location = html.find('div', class_="companyLocation")
+    location = html.select_one('div.companyLocation')
 
+    # 추출한 태그에 자식 태그들 제거
+    for tag in location.find_all():
+        # tag.extract() ### extract() : 자식 태그 제거하면서 제거된 태그 값을 리턴함.
+        tag.decompose() ### decompose() : 자식 태그 제거 
+       
+    location = location.text
+    job_id = html.parent['data-jk']
+    job_tk = html.parent['data-mobtk']
+
+    return {
+        'title' : title, 
+        'company' : company, 
+        "location" : location, 
+        "link" : f"https://www.indeed.com/viewjob?jk={job_id}&tk={job_tk}&from=serp&vjs=3"}
 
 def extract_indee_jobs(last_page) : 
+
+    jobs = [];
+
     for page in range(last_page) :
         
-        jobs = [];
+        print(f"Scrapplin page {page+1}")
 
         ### 각 페이지에서 웹을 호출함.
         result = requests.get(f"{URL}&start={page*LIMIT}")
@@ -68,11 +88,10 @@ def extract_indee_jobs(last_page) :
         ### div 태그에서 클래스는 jobsearch-serpJobCart 인 텍스트 추출  
         ### find_all : 검색하는 키워드 전부 찾음
         ### find : 검색하는 키워드 중 하나만 찾음
-        results = soup.find_all("div", class_="job_seen_beacon")
-        
+        results = soup.find_all("div", class_="slider_container")   
+
         for result in results :
             job = extract_job(result)
-            print(job)
             jobs.append(job) 
         
     return jobs;
