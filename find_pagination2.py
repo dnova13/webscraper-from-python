@@ -64,6 +64,8 @@ for page in pages :
 print()
 print(pageList); # 마지막에서 첫번째 리스트 가져옴
 
+maxPage = pageList[-1]
+print(maxPage);
 
 
 

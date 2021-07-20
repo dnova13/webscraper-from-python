@@ -93,5 +93,5 @@ for page in pages[:-1] :
 
 print(spans);
 
-
-
+maxPage = spans[-1]
+print(maxPage);
