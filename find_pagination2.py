@@ -66,6 +66,24 @@ print(pageList); # 마지막에서 첫번째 리스트 가져옴
 
 maxPage = pageList[-1]
 print(maxPage);
+print(range(maxPage))
+
+"""  """
+#### Requesting Each Page 
+
+### 각각 페이지에서 start 값 구함.
+for i in range(maxPage) :
+    print(i)
+    print(f"start={i*50}")
+
+
+
+
+
+
+
+
+
 
 
 
