@@ -29,7 +29,6 @@ def extract_indeed_pages() :
     for page in pages : 
         pageList.append(int(page.string))
 
-
     maxPage = pageList[-1]
 
     return maxPage;
@@ -70,7 +69,8 @@ def extract_job(html) :
         'title' : title, 
         'company' : company, 
         "location" : location, 
-        "link" : f"https://www.indeed.com/viewjob?jk={job_id}&tk={job_tk}&from=serp&vjs=3"}
+        "link" : f"https://www.indeed.com/viewjob?jk={job_id}&tk={job_tk}&from=serp&vjs=3"
+        }
 
 def extract_indee_jobs(last_page) : 
 
@@ -78,7 +78,7 @@ def extract_indee_jobs(last_page) :
 
     for page in range(last_page) :
         
-        print(f"Scrapplin page {page+1}")
+        print(f"Scrapping indeed page {page+1}")
 
         ### 각 페이지에서 웹을 호출함.
         result = requests.get(f"{URL}&start={page*LIMIT}")
