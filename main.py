@@ -1,9 +1,5 @@
-from indeed import extract_indeed_pages, extract_indee_jobs
+from indeed import get_jobs as get_indeed_jobs
 
-max_indeed_page = extract_indeed_pages();
-# print(max_indeed_page)
-
-indeed_jobs = extract_indee_jobs(max_indeed_page);
-
+indeed_jobs = get_indeed_jobs();
 print(indeed_jobs);
 

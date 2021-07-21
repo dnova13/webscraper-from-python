@@ -96,7 +96,12 @@ def extract_indee_jobs(last_page) :
         
     return jobs;
 
+def get_jobs() :
+    last_indeed_page = extract_indeed_pages();
 
+    indeed_jobs = extract_indee_jobs(last_indeed_page);
+
+    return indeed_jobs;
 
 
 
